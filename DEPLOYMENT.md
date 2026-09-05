@@ -14,7 +14,7 @@
 ## 正式啟用尚需完成
 
 1. 設定 GitHub OAuth App。正式 callback 為 `https://comments.rurichan.work/auth/callback`，測試環境使用獨立 OAuth App 與測試站的 `/auth/callback`。將 `GITHUB_CLIENT_ID`、`GITHUB_CLIENT_SECRET` 放入對應 Worker secrets。管理員固定 GitHub user ID 為 `84240213`。
-2. 取得 Disqus 匯出檔、完成遷移預覽與核對。正式資料庫目前只有文章清單，沒有匯入舊評論。
+2. Disqus 匯出已完成預覽與核對：10 個討論串、0 則留言，無需執行留言匯入。詳見 [MIGRATION.md](MIGRATION.md)。
 3. 從中國大陸網絡測試 Turnstile、讀取、留言及回覆。本次執行環境經由 NRT Cloudflare 節點成功訪問，不能作為中國大陸直連驗收。
 4. 完成上述步驟後將正式環境 `COMMENTS_ENABLED` 改為 `true`，重新部署 Worker，並在博客 `theme_config.blog_comments.enabled` 設定為 `true`。
 
@@ -41,6 +41,6 @@ pnpm exec wrangler d1 export DB --env production --remote --output work/backup.s
 
 ## 已完成驗證
 
-- 12 個自動化測試通過（包含真正的本機 D1 API 測試）。
+- 13 個自動化測試通過（包含真正的本機 D1 API 測試及 gzip 匯出讀取）。
 - 測試站瀏覽器實測 Turnstile 自動成功、留言發布及純文字顯示。
 - 正式 Worker 設有寫入開關；未登入不能讀取或修改管理 API。
