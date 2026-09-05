@@ -1,0 +1,31 @@
+{
+  "name": "blog-comments",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "dev": "pnpm build && wrangler dev",
+    "check": "pnpm typecheck && pnpm test && pnpm build",
+    "deploy:staging": "pnpm check && node scripts/deploy.mjs staging",
+    "deploy:production": "pnpm check && node scripts/deploy.mjs production",
+    "articles": "node scripts/articles.mjs",
+    "import:disqus": "node scripts/import-disqus.mjs"
+  },
+  "dependencies": { "hono": "^4.9.0" },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250901.0",
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.25.0",
+    "fast-xml-parser": "^5.0.0",
+    "html-to-text": "^9.0.5",
+    "miniflare": "^4.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0",
+    "wrangler": "^4.0.0"
+  },
+  "pnpm": { "onlyBuiltDependencies": ["esbuild", "workerd"] }
+}

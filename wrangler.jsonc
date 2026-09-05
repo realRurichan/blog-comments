@@ -1,0 +1,31 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "blog-comments-local",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": { "directory": "dist", "binding": "ASSETS", "run_worker_first": true },
+  "vars": {
+    "ENVIRONMENT": "local",
+    "SERVICE_ORIGIN": "http://localhost:8787",
+    "ALLOWED_ORIGINS": "http://localhost:8787,http://localhost:4000",
+    "ADMIN_GITHUB_ID": "84240213",
+    "TURNSTILE_SITE_KEY": "1x00000000000000000000AA"
+  },
+  "d1_databases": [{ "binding": "DB", "database_name": "blog-comments-local", "database_id": "00000000-0000-0000-0000-000000000000", "migrations_dir": "migrations" }],
+  "triggers": { "crons": ["17 3 * * *"] },
+  "env": {
+    "staging": {
+      "name": "blog-comments-staging",
+      "workers_dev": true,
+      "vars": { "ENVIRONMENT": "staging", "SERVICE_ORIGIN": "REPLACE_STAGING_ORIGIN", "ALLOWED_ORIGINS": "REPLACE_EXACT_PAGES_PREVIEW_ORIGIN", "ADMIN_GITHUB_ID": "84240213", "TURNSTILE_SITE_KEY": "REPLACE_STAGING_SITE_KEY" },
+      "d1_databases": [{ "binding": "DB", "database_name": "blog-comments-staging", "database_id": "REPLACE_STAGING_DATABASE_ID", "migrations_dir": "migrations" }]
+    },
+    "production": {
+      "name": "blog-comments",
+      "workers_dev": false,
+      "routes": [{ "pattern": "comments.rurichan.work", "custom_domain": true }],
+      "vars": { "ENVIRONMENT": "production", "SERVICE_ORIGIN": "https://comments.rurichan.work", "ALLOWED_ORIGINS": "https://blog.rurichan.work", "ADMIN_GITHUB_ID": "84240213", "TURNSTILE_SITE_KEY": "REPLACE_PRODUCTION_SITE_KEY" },
+      "d1_databases": [{ "binding": "DB", "database_name": "blog-comments-production", "database_id": "REPLACE_PRODUCTION_DATABASE_ID", "migrations_dir": "migrations" }]
+    }
+  }
+}

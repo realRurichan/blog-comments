@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>評論管理 · Ruri's Blog</title><link rel="stylesheet" href="/admin/style.css"><script type="module" src="/admin/admin.js"></script></head>
+<body><main><header><p class="eyebrow">RURI'S BLOG / COMMENTS</p><h1>評論管理</h1><p>留住交流，也照顧這裡的秩序。</p></header>
+<section id="login"><h2>管理員登入</h2><p>使用 Ruri 的 GitHub 帳號管理評論。</p><a class="button" href="/auth/github">使用 GitHub 登入</a></section>
+<section id="dashboard" hidden><div class="toolbar"><label>顯示 <select id="filter"><option value="all">全部評論</option><option value="visible">公開</option><option value="hidden">已隱藏</option><option value="deleted">已刪除</option></select></label><button id="refresh">重新整理</button><button id="logout">登出</button></div><div id="list"></div><button id="more" hidden>載入更多</button></section>
+<p id="status" role="status" aria-live="polite"></p><footer>blog-comments · Workers + D1</footer></main></body></html>

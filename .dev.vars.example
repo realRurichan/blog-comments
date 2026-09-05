@@ -1,0 +1,5 @@
+# Cloudflare 官方測試金鑰，僅供本機。部署環境使用 wrangler secret put。
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+RATE_LIMIT_SECRET=local-only-change-to-a-random-secret-before-deploy
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
