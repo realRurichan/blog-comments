@@ -167,10 +167,12 @@ app.get('/', c => c.redirect('/admin/'));
 app.get('*', async c => {
   if (c.req.path.startsWith('/api/')) return c.json({ error: '找不到此端點。' }, 404);
   const response = await c.env.ASSETS.fetch(c.req.raw);
-  if (c.req.path.endsWith('.js')) c.header('Access-Control-Allow-Origin', '*');
-  c.header('Content-Security-Policy', "default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
-  c.header('Cache-Control', c.req.path.startsWith('/admin') ? 'no-store' : 'public, max-age=300');
-  return response;
+  // c.header() 不作用於直接 return 的原始 Response,必須重建 Response 才能帶上標頭。
+  const res = new Response(response.body, response);
+  if (c.req.path.endsWith('.js')) res.headers.set('Access-Control-Allow-Origin', '*');
+  res.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
+  res.headers.set('Cache-Control', c.req.path.startsWith('/admin') ? 'no-store' : 'public, max-age=300');
+  return res;
 });
 export default {
   fetch: app.fetch,
