@@ -24,7 +24,7 @@
       "name": "blog-comments",
       "workers_dev": false,
       "routes": [{ "pattern": "comments.rurichan.work", "custom_domain": true }],
-      "vars": { "ENVIRONMENT": "production", "SERVICE_ORIGIN": "https://comments.rurichan.work", "ALLOWED_ORIGINS": "https://blog.rurichan.work", "ADMIN_GITHUB_ID": "84240213", "TURNSTILE_SITE_KEY": "0x4AAAAAAEoifl2Ihb8132hp", "COMMENTS_ENABLED": "false" },
+      "vars": { "ENVIRONMENT": "production", "SERVICE_ORIGIN": "https://comments.rurichan.work", "ALLOWED_ORIGINS": "https://blog.rurichan.work", "ADMIN_GITHUB_ID": "84240213", "TURNSTILE_SITE_KEY": "0x4AAAAAAEoifl2Ihb8132hp", "COMMENTS_ENABLED": "true" },
       "d1_databases": [{ "binding": "DB", "database_name": "blog-comments-production", "database_id": "5abd40a2-a945-4871-8ff3-0641ef390dea", "migrations_dir": "migrations" }]
     }
   }
