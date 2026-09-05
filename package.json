@@ -6,6 +6,7 @@
   "engines": { "node": ">=22" },
   "scripts": {
     "build": "node scripts/build.mjs",
+    "build:api": "pnpm build && node scripts/build-api.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "dev": "pnpm build && wrangler dev",
@@ -26,6 +27,5 @@
     "typescript": "^5.9.0",
     "vitest": "^3.2.0",
     "wrangler": "^4.0.0"
-  },
-  "pnpm": { "onlyBuiltDependencies": ["esbuild", "workerd"] }
+  }
 }

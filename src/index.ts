@@ -41,7 +41,7 @@ app.get('/health', async c => {
   await c.env.DB.prepare('SELECT id FROM articles LIMIT 1').first();
   return c.json({ ok: true });
 });
-app.get('/api/v1/config', c => c.json({ siteKey: c.env.TURNSTILE_SITE_KEY, maxName: 40, maxContent: 4000 }));
+app.get('/api/v1/config', c => c.json({ siteKey: c.env.TURNSTILE_SITE_KEY, maxName: 40, maxContent: 4000, enabled: c.env.COMMENTS_ENABLED !== 'false' }));
 app.get('/api/v1/comments', async c => {
   const article = c.req.query('article');
   if (!article || article.length > 2200) return c.json({ error: '文章識別碼無效。' }, 400);
@@ -52,6 +52,7 @@ app.get('/api/v1/comments', async c => {
   return c.json({ comments: results.slice(0, 20), nextCursor: results.length > 20 ? encodeCursor(results[19]) : null });
 });
 app.post('/api/v1/comments', async c => {
+  if (c.env.COMMENTS_ENABLED === 'false') return c.json({ error: '評論正在準備中，請待舊評論遷移完成後再留言。' }, 503);
   let data: Record<string, unknown>;
   try { data = await c.req.json(); } catch { return c.json({ error: '內容格式無效。' }, 400); }
   if (!data || typeof data !== 'object') return c.json({ error: '內容格式無效。' }, 400);

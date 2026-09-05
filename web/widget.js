@@ -75,6 +75,7 @@ export class BlogComments extends HTMLElement {
     this.q('#verify').disabled = true;
     try {
       const config = await this.request('/api/v1/config');
+      if (config.enabled === false) { this.status('submit', '評論正在準備中，待舊評論遷移完成後開放留言。'); return; }
       const turnstile = await loadTurnstile();
       if (!this.isConnected) return;
       if (this.widgetId !== undefined) turnstile.remove(this.widgetId);
